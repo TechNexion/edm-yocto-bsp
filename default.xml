@@ -3,6 +3,7 @@
 
   <default sync-j="2"/>
 
+  <remote fetch="https://github.com/TechNexion" name="edm-release" />
   <remote fetch="git://git.freescale.com/imx" name="fsl-release" />
   <remote fetch="git://git.yoctoproject.org" name="yocto"/>
   <remote fetch="git://github.com/Freescale" name="freescale"/>
@@ -26,8 +27,10 @@
   <project remote="OSSystems" revision="63963cc56c8d0291779693e62b66cb16e5c86883" name="meta-browser" path="sources/meta-browser" />
   <project remote="QT5" revision="41c5daa84af4466bfc9aa61f6f772c68470a628b" name="meta-qt5" path="sources/meta-qt5" />
 
-  <project remote="fsl-release" name="meta-fsl-bsp-release" path="sources/meta-fsl-bsp-release" revision="dizzy_3.14.28-1.0.0_GA" >
-     <copyfile src="imx/tools/fsl-setup-release.sh" dest="fsl-setup-release.sh"/>
+  <project remote="fsl-release" name="meta-fsl-bsp-release" path="sources/meta-fsl-bsp-release" revision="dizzy_3.14.28-1.0.0_GA" />
+
+  <project remote="edm-release" name="meta-edm-bsp-release" path="sources/meta-edm-bsp-release" revision="dizzy_3.10.53-1.1.0_GA" >
+     <copyfile src="tools/edm-setup-release.sh" dest="edm-setup-release.sh"/>
   </project>
 
 </manifest>
