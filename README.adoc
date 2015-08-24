@@ -1,0 +1,33 @@
+= Technexion Yocto BSP
+
+To get the BSP you need to have `repo` installed and use it as:
+
+Install the `repo` utility:
+
+[source,console]
+$: mkdir ~/bin
+$: curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+$: chmod a+x ~/bin/repo
+
+Download the BSP source:
+
+[source,console]
+$: PATH=${PATH}:~/bin
+$: mkdir edm-yocto
+$: cd edm-yocto
+$: repo init -u https://github.com/TechNexion/edm-yocto-bsp.git -b dizzy_3.10.53-1.1.0_GA
+$: repo sync
+
+At the end of the commands you have every metadata you need to start work with.
+
+To start a simple image build:
+
+[source,console]
+$: DISPLAY=hdmi720p MACHINE=edm-fairy-imx6 source edm-setup-release.sh -b build-x11 -e x11
+$: bitbake fsl-image-qt5
+
+`DISPLAY` parameters can be:
+`lvds7`, `hdmi720p`, `hdmi1080p`, `lcd`, `lvds7_hdmi720p`, `custom`
+
+`MACHINE` parameters can be:
+`edm-fairy-imx6`, `edm-toucan-imx6`
