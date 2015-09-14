@@ -27,7 +27,7 @@
   <project remote="OSSystems" revision="63963cc56c8d0291779693e62b66cb16e5c86883" name="meta-browser" path="sources/meta-browser" />
   <project remote="QT5" revision="41c5daa84af4466bfc9aa61f6f772c68470a628b" name="meta-qt5" path="sources/meta-qt5" />
 
-  <project remote="fsl-release" name="meta-fsl-bsp-release" path="sources/meta-fsl-bsp-release" revision="dizzy_3.14.28-1.0.0_GA" />
+  <project remote="fsl-release" name="meta-fsl-bsp-release" path="sources/meta-fsl-bsp-release" revision="dizzy_3.14.28-1.0.1_patch" />
 
   <project remote="edm-release" name="meta-edm-bsp-release" path="sources/meta-edm-bsp-release" revision="dizzy_3.10.53-1.1.0_GA" >
      <copyfile src="tools/edm-setup-release.sh" dest="edm-setup-release.sh"/>
