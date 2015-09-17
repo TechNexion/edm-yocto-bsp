@@ -30,4 +30,4 @@ $: bitbake fsl-image-qt5
 `lvds7`, `hdmi720p`, `hdmi1080p`, `lcd`, `lvds7_hdmi720p`, `custom`
 
 `MACHINE` parameters can be:
-`edm-fairy-imx6`, `edm-toucan-imx6`
+`edm-fairy-imx6`, `edm-toucan-imx6`, `edm-goblin-imx6sx`
