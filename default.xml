@@ -29,7 +29,7 @@
 
   <project remote="fsl-release" name="meta-fsl-bsp-release" path="sources/meta-fsl-bsp-release" revision="dizzy_3.14.28-1.0.1_patch" />
 
-  <project remote="edm-release" name="meta-edm-bsp-release" path="sources/meta-edm-bsp-release" revision="dizzy_3.10.53-1.1.0_GA" >
+  <project remote="edm-release" name="meta-edm-bsp-release" path="sources/meta-edm-bsp-release" revision="dizzy_3.14.52-1.1.0_GA" >
      <copyfile src="tools/edm-setup-release.sh" dest="edm-setup-release.sh"/>
   </project>
 
