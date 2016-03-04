@@ -11,25 +11,25 @@
   <remote fetch="git://github.com/OSSystems" name="OSSystems"/>
   <remote fetch="git://github.com/meta-qt5"  name="QT5"/>
 
-  <project remote="yocto" revision="f20e4c0cf6ddb29a1aad6e7b095e1472e81d330c" name="poky" path="sources/poky"/>
-  <project remote="yocto" revision="b74e5e690d8d4e149ea9de3f0fcca37bad93935f" name="meta-fsl-arm" path="sources/meta-fsl-arm"/>
+  <project remote="yocto" revision="ee88b51cf2853ab075c9bd2ef7cf4d65d1c96674" name="poky" path="sources/poky"/>
+  <project remote="yocto" revision="92f95101da529f4b67ef8d1af50ce762f81f40ad" name="meta-fsl-arm" path="sources/meta-fsl-arm"/>
 
-  <project remote="oe" revision="7bbacd0023fa1111da94ba0b2aafd7d872301ffe" name="meta-openembedded" path="sources/meta-openembedded"/>
+  <project remote="oe" revision="10d3c8f85280a0bf867a8e4f84bcda81c290d28e" name="meta-openembedded" path="sources/meta-openembedded"/>
 
   <project remote="freescale" revision="89c605386ec81d64b38562acbc66942964fad971" name="fsl-community-bsp-base" path="sources/base">
         <copyfile dest="README" src="README"/>
         <copyfile dest="setup-environment" src="setup-environment"/>
   </project>
 
-  <project remote="freescale" revision="b32528c10caac5e85f2b5efe0e5b95322dd68ace" name="meta-fsl-arm-extra" path="sources/meta-fsl-arm-extra"/>
-  <project remote="freescale" revision="48cb0bcdd226d2e7eee1fdc222713e1dff93342c" name="meta-fsl-demos" path="sources/meta-fsl-demos"/>
+  <project remote="freescale" revision="0786aa76f4772ea7b83d4bab10567c4530b2d1bc" name="meta-fsl-arm-extra" path="sources/meta-fsl-arm-extra"/>
+  <project remote="freescale" revision="836bdf5a9d500ed258f1ddc07d89eca74a704098" name="meta-fsl-demos" path="sources/meta-fsl-demos"/>
 
-  <project remote="OSSystems" revision="63963cc56c8d0291779693e62b66cb16e5c86883" name="meta-browser" path="sources/meta-browser" />
-  <project remote="QT5" revision="41c5daa84af4466bfc9aa61f6f772c68470a628b" name="meta-qt5" path="sources/meta-qt5" />
+  <project remote="OSSystems" revision="30b8d6b3d0d6501c56ef6967a2fa73a3d4bf5fe9" name="meta-browser" path="sources/meta-browser" />
+  <project remote="QT5" revision="fc026381545650e10fdd488d5b2a3b2d78f87793" name="meta-qt5" path="sources/meta-qt5" />
 
-  <project remote="fsl-release" name="meta-fsl-bsp-release" path="sources/meta-fsl-bsp-release" revision="dizzy_3.14.28-1.0.1_patch" />
+  <project remote="fsl-release" name="meta-fsl-bsp-release" path="sources/meta-fsl-bsp-release" revision="fido_3.14.38_6QP_ga" />
 
-  <project remote="edm-release" name="meta-edm-bsp-release" path="sources/meta-edm-bsp-release" revision="dizzy_3.14.52-1.1.0_GA" >
+  <project remote="edm-release" name="meta-edm-bsp-release" path="sources/meta-edm-bsp-release" revision="fido_3.14.52-1.1.0_test" >
      <copyfile src="tools/edm-setup-release.sh" dest="edm-setup-release.sh"/>
   </project>
 
