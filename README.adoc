@@ -31,7 +31,7 @@ Download the BSP source:
 $: PATH=${PATH}:~/bin
 $: mkdir edm-yocto
 $: cd edm-yocto
-$: repo init -u https://github.com/TechNexion/edm-yocto-bsp.git -b dizzy_3.10.53-1.1.0_GA
+$: repo init -u https://github.com/TechNexion/edm-yocto-bsp.git -b dizzy_3.14.52-1.1.0_GA
 $: repo sync
 
 At the end of the commands you have every metadata you need to start work with.
