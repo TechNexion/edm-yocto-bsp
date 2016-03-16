@@ -34,6 +34,29 @@ $: cd edm-yocto
 $: repo init -u https://github.com/TechNexion/edm-yocto-bsp.git -b dizzy_3.14.52-1.1.0_GA
 $: repo sync
 
+For now, there are releases as follows:
+
+`dizzy_3.10.53-1.1.0_GA_20150917`
+
+`dizzy_3.10.53-1.1.0_GA_20151021`
+
+`dizzy_3.10.53-1.1.0_GA_20160108`
+
+`dizzy_3.14.52-1.1.0_GA_20160301`
+
+The releases correspond to the source tarball on Technexion FTP:
+
+ftp://ftp.technexion.net/development_resources/Freescale/yocto/
+
+If you want to check out specific release:
+[source,console]
+$: repo init -u https://github.com/TechNexion/edm-yocto-bsp.git -b dizzy_3.10.53-1.1.0_GA
+$: repo sync -j8
+$: cd sources/meta-edm-bsp-release/
+$: git checkout dizzy_3.10.53-1.1.0_GA_20160108
+$: cd -
+
+
 At the end of the commands you have every metadata you need to start work with.
 
 To start a simple image build:
