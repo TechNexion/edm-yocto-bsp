@@ -29,7 +29,7 @@
 
   <project remote="fsl-release" name="meta-fsl-bsp-release" path="sources/meta-fsl-bsp-release" revision="jethro_4.1.15-1.0.0_ga" />
 
-  <project remote="edm-release" name="meta-edm-bsp-release" path="sources/meta-edm-bsp-release" revision="jethro_4.1.15-1.1.0_GA" >
+  <project remote="edm-release" name="meta-edm-bsp-release" path="sources/meta-edm-bsp-release" revision="8b47607ba56f57854384d53e2e78f56e3fa41b27" >
      <copyfile src="tools/edm-setup-release.sh" dest="edm-setup-release.sh"/>
      <copyfile src="README" dest="README-Technexion-BSP"/>
   </project>
