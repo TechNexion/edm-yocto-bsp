@@ -1,4 +1,4 @@
-= Technexion Yocto BSP
+= TechNexion Yocto BSP
 
 Host Environment Setup
 [source,console]
@@ -25,48 +25,4 @@ $: mkdir ~/bin
 $: curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
 $: chmod a+x ~/bin/repo
 
-Download the BSP source:
-
-[source,console]
-$: PATH=${PATH}:~/bin
-$: mkdir edm-yocto
-$: cd edm-yocto
-$: repo init -u https://github.com/TechNexion/edm-yocto-bsp.git -b dizzy_3.14.52-1.1.0_GA
-$: repo sync
-
-For now, there are releases as follows:
-
-`dizzy_3.10.53-1.1.0_GA_20150917`
-
-`dizzy_3.10.53-1.1.0_GA_20151021`
-
-`dizzy_3.10.53-1.1.0_GA_20160108`
-
-`dizzy_3.14.52-1.1.0_GA_20160301`
-
-The releases correspond to the source tarball on Technexion FTP:
-
-ftp://ftp.technexion.net/development_resources/Freescale/yocto/
-
-If you want to check out specific release:
-[source,console]
-$: repo init -u https://github.com/TechNexion/edm-yocto-bsp.git -b dizzy_3.10.53-1.1.0_GA
-$: repo sync -j8
-$: cd sources/meta-edm-bsp-release/
-$: git checkout dizzy_3.10.53-1.1.0_GA_20160108
-$: cd -
-
-
-At the end of the commands you have every metadata you need to start work with.
-
-To start a simple image build:
-
-[source,console]
-$: DISPLAY=hdmi720p MACHINE=edm-fairy-imx6 source edm-setup-release.sh -b build-x11 -e x11
-$: bitbake fsl-image-qt5
-
-`DISPLAY` parameters can be:
-`lvds7`, `hdmi720p`, `hdmi1080p`, `lcd`, `lvds7_hdmi720p`, `custom`
-
-`MACHINE` parameters can be:
-`edm-fairy-imx6`, `edm-toucan-imx6`, `edm-goblin-imx6sx`, `picosom-dwarf-imx6`, `tek3-imx6`
+Please refer to each branch to get download information and build instructions.
