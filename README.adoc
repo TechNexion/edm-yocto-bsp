@@ -1,0 +1,161 @@
+= TechNexion Yocto 1.7 dizzy 3.14.52 BSP
+
+This BSP is a TechNexion release providing support NXP i.mx series processors
+
+[source,console]
+$: mkdir ~/bin
+$: curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+$: chmod a+x ~/bin/repo
+
+Download the BSP source:
+[source,console]
+$: PATH=${PATH}:~/bin
+$: mkdir edm_yocto
+$: cd edm_yocto
+$: repo init -u https://github.com/TechNexion/edm-yocto-bsp.git -b dizzy_3.14.52-1.1.0_GA
+$: repo sync -j8
+
+
+== Configurations for setup script
+
+`“MACHINE”` is the target of build. It usually corresponds to the name of SOM or SBC.
+
+For more information, please check the file under `“sources/meta-edm-bsp-release/conf/machine”`.
+
+`“DISPLAY”` is the disply type. This option only works on i.mx6 (i.mx6 Solo/Dual Lite/Dual/Quad) SOMs and doesn’t work for i.mx6sx.
+
+`“-b”` specify the build directory.
+
+`“-e”` sets the graphical back end for frame buffer and direct fb images. X11 is default if no backend is set.
+
+.Build configurations for supported hardware
+|===
+|Parameter |Available options
+
+|MACHINE
+|edm-fairy-imx6
+
+|
+|edm-toucan-imx6
+
+|
+|edm-goblin-imx6sx
+
+|
+|picosom-dwarf-imx6
+
+|
+|tek3-imx6
+
+|DISPLAY
+|lvds7
+
+|
+|hdmi720p
+
+|
+|hdmi1080p
+
+|
+|lcd
+
+|
+|lvds7_hdmi720p
+
+|
+|custom
+
+|-b
+|<build dir>
+
+|-e
+|fb
+
+|
+|dfb
+
+|
+|wayland
+
+|
+|x11
+
+|===
+
+.Choosing Yocto target image
+|===
+|Image name |Target
+
+|core-image-minimal
+|A small image that only allows a device to boot
+
+|core-image-base
+|A console-only image that fully supports the target device
+hardware
+
+|core-image-sato
+|An image with Sato, a mobile environment and visual style
+for mobile devices. The image supports X11 with a Sato
+theme, Pimlico applications. It contains a terminal, an
+editor and a file manager
+
+|fsl-image-machine-test
+|An FSL Community i.MX core image with console
+environment - no GUI interface
+
+|fsl-image-gui
+|Builds a Freescale image with a GUI without any QT
+content. This image recipe works on all backends for X11,
+DirectFB, Frame Buffer and Wayland
+
+|fsl-image-qt5
+|Builds a QT5 image for X11, Frame Buffer and Wayland
+backends
+|===
+
+== Build Yocto for TechNexion target platform
+
+*QT5 with X11 image for edm-fairy-imx6 with HDMI:*
+[source,console]
+$: DISPLAY=hdmi720p MACHINE=edm-fairy-imx6 source edm-setup-release.sh -b build-x11 -e x11
+$: bitbake fsl-image-qt5
+
+*QT5 with X11 image for edm-fairy-imx6 with 7 inch LVDS panel:*
+[source,console]
+$: DISPLAY=lvds7 MACHINE=edm-fairy-imx6 source edm-setup-release.sh -b build-x11 -e x11
+$: bitbake fsl-image-qt5
+
+*QT5 with X11 image for edm-toucan-imx6 with 7 inch LVDS panel:*
+[source,console]
+$: DISPLAY=lvds7 MACHINE=edm-toucan-imx6 source edm-setup-release.sh -b build-x11 -e x11 
+$: bitbake fsl-image-qt5
+
+*QT5 with X11 image for edm-goblin-imx6sx with 7 inch LVDS panel:*
+[source,console]
+$: MACHINE=edm-goblin-imx6sx source edm-setup-release.sh -b build-x11 -e x11
+$: bitbake fsl-image-qt5
+
+Note: 
+1. Because i.mx6sx lacks VPU, the freescale proprietory video decoder can't be used in video playback.
+2.  edm-goblin-imx6sx doesn't support HDMI output, and it only supports to output to LVDS 7-inch panel now.
+
+*QT5 with X11 image for picosom-dwarf-imx6:*
+[source,console]
+$: MACHINE=picosom-dwarf-imx6 source edm-setup-release.sh -b build-x11 -e x11 
+$: bitbake fsl-image-qt5
+
+*QT5 with X11 image for picosom-dwarf-imx6 with 7 inch LVDS panel:*
+[source,console]
+$: DISPLAY=lvds7 MACHINE=picosom-dwarf-imx6 source edm-setup-release.sh -b build-x11 -e x11 
+$: bitbake fsl-image-qt5
+
+*QT5 with X11 image for tek3-imx6 with HDMI output:*
+[source,console]
+$: MACHINE=tek3-imx6 source edm-setup-release.sh -b build-x11 -e x11 
+$: bitbake fsl-image-qt5
+
+== Image Deployment
+When build completes, the generated release image is under “${BUILD-TYPE}/tmp/deploy/images/${MACHINE}”:
+
+"fsl-image-qt5-edm1-cf-imx6-${date}.rootfs.sdcard"
+Just flash this image into your target board to deploy yocto.
