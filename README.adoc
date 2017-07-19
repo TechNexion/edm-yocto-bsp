@@ -1,0 +1,353 @@
+= TechNexion Yocto 2.0 jethro 4.1.15 Next BSP
+
+This BSP is a TechNexion release providing support NXP i.mx series processors
+
+[source,console]
+$: mkdir ~/bin
+$: curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+$: chmod a+x ~/bin/repo
+
+Download the BSP source:
+[source,console]
+$: PATH=${PATH}:~/bin
+$: mkdir edm_yocto
+$: cd edm_yocto
+$: repo init -u https://github.com/TechNexion/edm-yocto-bsp.git -b jethro_4.1.15-1.1.0_next 
+$: repo sync -j8
+
+== Prepare WIFI/BT firmware
+Under `sources/meta-edm-bsp-release/recipes-bsp`, there are two directories: `"firmware-legacy"` and `"firmware-bcmdhd"` which contain wifi/BT firmware files.
+
+. firmware-legacy:
+This directory contains wifi/BT firmwares for `BCM4330`, the firmware files are from Linux-Wireless and added by default.
+
+. firmware-bcmdhd:
+This directory is supposed to contain the WIFI/BT firmwares of `Ampak AP6335(BCM4339) and AP6212(BCM43438)`.
+Because of the license restriction, please contact TechNexion FAE or Sales to get licensed firmware files.
+After getting the firmware binary:
+.. Put all the firmware files into `sources/meta-edm-bsp-release/recipes-bsp/firmware-bcmdhd/files`.
+.. Activate the deployment of `Ampak AP6335(BCM4339) and AP6212(BCM43438) firmware files`:
+[source,console]
+$: cp sources/meta-edm-bsp-release/recipes-bsp/firmware-bcmdhd/files/firmware-bcmdhd_1.0.1.bak sources/meta-edm-bsp-release/recipes-bsp/firmware-bcmdhd/firmware-bcmdhd_1.0.1.bb
+
+
+== Configurations for setup script
+
+`“MACHINE”` is the target of build. It usually corresponds to the name of SOM or SBC.
+
+For more information, please check the file under `“sources/meta-edm-bsp-release/conf/machine”`.
+
+`“DISPLAY”` is the disply type. This option only works on i.mx6 (i.mx6 Solo/Dual Lite/Dual/Quad) SOMs and doesn’t work for i.mx6ul, i.mx6sx and i.mx7.
+
+`“BASEBOARD”` is the baseboard type. This option only works on i.mx6 (i.mx6 Solo/Dual Lite/Dual/Quad) SOMs and doesn’t work on i.mx6ul and i.mx6sx.
+
+`“-b”` specify the build directory.
+
+`“-e”` sets the graphical back end for frame buffer and direct fb images. X11 is default if no backend is set.
+
+.Build configurations for supported hardware
+|===
+|Parameter |Available options|Description
+
+|MACHINE
+|edm1-cf-imx6
+|Compatible with TechNexion 
+EDM1-CF-IMX6/EDM1-IMX6PLUS
+(i.MX6 Solo/Dual Lite/Dual/Quad/Quad Plus)
+
+|
+|edm1-cf-imx6-no-console
+|The same as “edm1-cf-imx6”, but disable the debug 
+console output(This option is used for TC-07x0)
+
+|
+|pico-imx6
+|Compatible with TechNexion PICO-IMX6/PICO-IMX6POP
+(i.MX6 Solo/Dual Lite/Dual/Quad/Quad pop)
+
+|
+|tek-imx6
+|Compatible with TechNexion TEK3-IMX6/TEP-1010-IMX6/TEP-1560-IMX6
+(i.MX6 Solo/Dual Lite/Dual/Quad/Quad Plus)
+
+|
+|edm1-cf-imx6sx
+|Compatible with TechNexion EDM1-CF-IMX6SX with 
+EDM1-GOBLIN baseboard (two LAN port)
+
+|
+|pico-imx6ul-emmc
+|Compatible with TechNexion PICO-IMX6UL-EMMC
+
+
+|
+|pico-imx6ul-nand
+|Compatible with TechNexion PICO-IMX6UL-NAND with
+PICO-HOBBIT baseboard
+
+|
+|pico-imx7
+|Compatible with TechNexion PICO-IMX7
+
+|DISPLAY
+|lvds7
+|7 inch 1024x600 LVDS panel
+
+|
+|hdmi720p
+|1280x720 HDMI
+
+|
+|hdmi1080p
+|1920x1080 HDMI
+
+|
+|lcd
+|5 inch/7 inch 800x480 TTL parallel LCD panel
+
+|
+|lvds7_hdmi720p
+|Dual display output to both 7 inch LVDS and HDMI
+
+|
+|custom
+|Reserved for custom panel
+
+|BASEBOARD
+|fairy, tc0700
+|Compatible with TechNexion 
+EDM1-CF-IMX6/EDM1-IMX6PLUS
+(i.MX6 Solo/Dual Lite/Dual/Quad/Quad Plus)
+
+|
+|dwarf, hobbit, nymph
+|Compatible with TechNexion PICO-IMX6/PICO-IMX6POP
+(i.MX6 Solo/Dual Lite/Dual/Quad/Quad pop)
+
+|-b
+|<build dir>
+|Assign the name of build directory
+
+|-e
+|fb
+|Frame Buffer graphics
+
+|
+|x11
+|Only X11 graphics
+
+|
+|wayland
+|Wayland weston graphics. It doesn’t support i.mx6ul
+|===
+
+.Choosing Yocto target image
+|===
+|Image name |Target
+
+|core-image-minimal
+|A small image that only allows a device to boot
+
+|core-image-base
+|A console-only image that fully supports the target device
+hardware
+
+|core-image-sato
+|An image with Sato, a mobile environment and visual style
+for mobile devices. The image supports X11 with a Sato
+theme, Pimlico applications. It contains a terminal, an
+editor and a file manager
+
+|fsl-image-machine-test
+|An FSL Community i.MX core image with console
+environment - no GUI interface
+
+|fsl-image-gui
+|Builds a Freescale image with a GUI without any QT
+content. This image recipe works on all backends for X11,
+DirectFB, Frame Buffer and Wayland
+
+|fsl-image-qt5
+|Builds a QT5 image for X11, Frame Buffer and Wayland
+backends
+|===
+
+== Build Yocto for TechNexion target platform
+=== For EDM1-CF-IMX6/EDM1-IMX6PLUS
+*FAIRY baseboard, QT5 with X11 image for HDMI output:*
+[source,console]
+$: MACHINE=edm1-cf-imx6 BASEBOARD=fairy source edm-setup-release.sh -b build-x11-fairy -e x11 
+$: bitbake fsl-image-qt5
+
+*FAIRY baseboard, QT5 with X11 image for 7 inch LVDS panel:*
+[source,console]
+$: DISPLAY=lvds7 MACHINE=edm1-cf-imx6 BASEBOARD=fairy source edm-setup-release.sh -b build-x11-fairy  -e x11 
+$: bitbake fsl-image-qt5
+
+*FAIRY baseboard, QT5 with X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: DISPLAY=lcd MACHINE=edm1-cf-imx6 BASEBOARD=fairy source edm-setup-release.sh -b build-x11-fairy  -e x11 
+$: bitbake fsl-image-qt5
+
+*Toucan0700, QT5 with X11 image for 7 inch LVDS panel and disabled debug console:*
+[source,console]
+$: DISPLAY=lvds7 MACHINE=edm1-cf-imx6-no-console BASEBOARD=tc0700 source edm-setup-release.sh -b build-x11-toucan -e x11 
+$: bitbake fsl-image-qt5
+
+=== For PICO-IMX6/PICO-IMX6POP
+*DWARF baseboard, QT5 with X11 image for HDMI output:*
+[source,console]
+$: MACHINE=pico-imx6 BASEBOARD=dwarf source edm-setup-release.sh -b build-x11-pico -e x11 
+$: bitbake fsl-image-qt5
+
+*DWARF baseboard, QT5 with X11 image for 7 inch LVDS panel:*
+[source,console]
+$: DISPLAY=lvds7 MACHINE=pico-imx6 BASEBOARD=dwarf source edm-setup-release.sh -b build-x11-pico -e x11 
+$: bitbake fsl-image-qt5
+
+*DWARF baseboard, QT5 with X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: DISPLAY=lcd MACHINE=pico-imx6 BASEBOARD=dwarf source edm-setup-release.sh -b build-x11-pico -e x11
+$: bitbake fsl-image-qt5
+
+*HOBBIT baseboard, QT5 with X11 image for 7 inch LVDS panel:*
+[source,console]
+$: DISPLAY=lvds7 MACHINE=pico-imx6 BASEBOARD=hobbit source edm-setup-release.sh -b build-x11-pico -e x11
+$: bitbake fsl-image-qt5
+
+*HOBBIT baseboard, QT5 with X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: DISPLAY=lcd MACHINE=pico-imx6 BASEBOARD=hobbit source edm-setup-release.sh -b build-x11-pico -e x11
+$: bitbake fsl-image-qt5
+
+*NYMPH baseboard, QT5 with X11 image for HDMI output:*
+[source,console]
+$: MACHINE=pico-imx6 BASEBOARD=nymph source edm-setup-release.sh -b build-x11-pico -e x11 
+$: bitbake fsl-image-qt5
+
+*NYMPH baseboard, QT5 with X11 image for 7 inch LVDS panel:*
+[source,console]
+$: DISPLAY=lvds7 MACHINE=pico-imx6 BASEBOARD=nymph source edm-setup-release.sh -b build-x11-pico -e x11
+$: bitbake fsl-image-qt5
+
+=== For TEK3-IMX6
+*TEK3-IMX6 BOX PC, QT5 with X11 image for HDMI output:*
+[source,console]
+$: MACHINE=tek-imx6 source edm-setup-release.sh -b build-x11-tek -e x11
+$: bitbake fsl-image-qt5
+
+=== For TEP-1010-IMX6/TEP-1560-IMX6
+*TEP-1010-IMX6, QT5 with X11 image:*
+[source,console]
+$: DISPLAY=lvds10 MACHINE=tek-imx6 source edm-setup-release.sh -b build-x11-tek -e x11 
+$: bitbake fsl-image-qt5
+
+*TEP-1560-IMX6, QT5 with X11 image:*
+[source,console]
+$: DISPLAY=lvds15 MACHINE=tek-imx6 source edm-setup-release.sh -b build-x11-tek -e x11 
+$: bitbake fsl-image-qt5
+
+=== For EDM1-CF-IMX6SX
+*Goblin baseboard, X11 image for 7 inch LVDS panel:*
+[source,console]
+$: MACHINE=edm1-cf-imx6sx source edm-setup-release.sh -b build-x11-goblin -e x11
+$: bitbake fsl-image-qt5
+
+=== For PICO-IMX6UL-EMMC
+*HOBBIT baseboard, X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx6ul-emmc source edm-setup-release.sh -b build-x11-pico-imx6ul -e x11
+$: bitbake fsl-image-gui
+
+*HOBBIT baseboard, QT5 with FB image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx6ul-emmc BASEBOARD=hobbit source edm-setup-release.sh -b build-fb-pico-imx6ul -e fb
+$: bitbake fsl-image-qt5
+
+*PI baseboard, X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx6ul-emmc BASEBOARD=pi source edm-setup-release.sh -b build-x11-pico-imx6ul -e x11
+$: bitbake fsl-image-gui
+
+*PI baseboard, QT5 with FB image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx6ul-emmc BASEBOARD=pi source edm-setup-release.sh -b build-fb-pico-imx6ul -e fb
+$: bitbake fsl-image-qt5
+
+=== For PICO-IMX6UL-NAND
+*HOBBIT baseboard, X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx6ul-nand source edm-setup-release.sh -b build-x11-pico-imx6ul-nand -e x11
+$: bitbake fsl-image-gui
+
+*HOBBIT baseboard, QT5 with FB image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx6ul-nand source edm-setup-release.sh -b build-fb-pico-imx6ul-nand -e fb
+$: bitbake fsl-image-qt5
+
+=== For PICO-IMX7
+*HOBBIT baseboard, X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=hobbit source edm-setup-release.sh -b build-x11-pico-imx7 -e x11
+$: bitbake fsl-image-gui
+
+*HOBBIT baseboard, QT5 with FB image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=hobbit source edm-setup-release.sh -b build-fb-pico-imx7 -e fb
+$: bitbake fsl-image-qt5
+
+*DWARF baseboard, X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=dwarf source edm-setup-release.sh -b build-x11-pico-imx7 -e x11
+$: bitbake fsl-image-gui
+
+*DWARF baseboard, QT5 with FB image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=dwarf source edm-setup-release.sh -b build-fb-pico-imx7 -e fb
+$: bitbake fsl-image-qt5
+
+*NYMPH baseboard, X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=nymph source edm-setup-release.sh -b build-x11-pico-imx7 -e x11
+$: bitbake fsl-image-gui
+
+*NYMPH baseboard, QT5 with FB image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=nymph source edm-setup-release.sh -b build-fb-pico-imx7 -e fb
+$: bitbake fsl-image-qt5
+
+*PI baseboard, X11 image for 5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=pi source edm-setup-release.sh -b build-x11-pico-imx7 -e x11
+$: bitbake fsl-image-gui
+
+*PI baseboard, QT5 with FB image for 5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=pi source edm-setup-release.sh -b build-fb-pico-imx7 -e fb
+$: bitbake fsl-image-qt5
+
+== Chromium
+To enable chromium requires the following steps:
+
+In conf/local.conf:
+Add chromium into your install list:
+[source,console]
+CORE_IMAGE_EXTRA_INSTALL += "chromium libexif"
+
+Add commercial into the white list:
+[source,console]
+LICENSE_FLAGS_WHITELIST="commercial"
+
+== QTWebkit
+To start to go to /usr/share/qt5/examples/webkitwidgets/browser and run browser
+
+== Qt
+Note Qt is support for i.mx6Solo/DL/Dual/Quad/QuadPlus/SoloX with x11 backend. x-window HW acceleration based on GPU is activated.
+
+Because i.mx6UL is lack of GPU. QT is supported for i.mx6UL with framebuffer backend without HW acceleration.
+
+== Image Deployment
+When build completes, the generated release image is under “${BUILD-TYPE}/tmp/deploy/images/${MACHINE}”:
+
+"fsl-image-qt5-edm1-cf-imx6-${date}.rootfs.sdcard"
+Just flash this image into your target board to deploy yocto.
