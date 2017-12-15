@@ -62,6 +62,11 @@ For more information, please check the file under `“sources/meta-edm-bsp-relea
 |Compatible with TechNexion PICO-IMX6/PICO-IMX6POP
 (i.MX6 Solo/Dual Lite/Dual/Quad/Quad pop)
 
+|
+|tek-imx6
+|Compatible with TechNexion TEK3-IMX6/TEP-1010-IMX6/TEP-1560-IMX6
+(i.MX6 Solo/Dual Lite/Dual/Quad/Quad Plus)
+
 |DISPLAY
 |lvds7
 |7 inch 1024x600 LVDS panel
@@ -87,7 +92,7 @@ For more information, please check the file under `“sources/meta-edm-bsp-relea
 |Reserved for custom panel
 
 |BASEBOARD
-|fairy, tc0700
+|fairy, tc0700, tc1000
 |Compatible with TechNexion 
 EDM1-CF-IMX6/EDM1-IMX6PLUS
 (i.MX6 Solo/Dual Lite/Dual/Quad/Quad Plus)
@@ -146,6 +151,64 @@ backends
 |===
 
 == Build Yocto for TechNexion target platform
+=== For PICO-IMX6/PICO-IMX6POP
+*DWARF baseboard, QT5 with X11 image for HDMI output:*
+[source,console]
+$: MACHINE=pico-imx6 BASEBOARD=dwarf source edm-setup-release.sh -b build-x11-pico -e x11
+$: bitbake fsl-image-qt5
+
+*DWARF baseboard, QT5 with X11 image for 7 inch LVDS panel:*
+[source,console]
+$: DISPLAY=lvds7 MACHINE=pico-imx6 BASEBOARD=dwarf source edm-setup-release.sh -b build-x11-pico -e x11
+$: bitbake fsl-image-qt5
+
+*DWARF baseboard, QT5 with X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: DISPLAY=lcd MACHINE=pico-imx6 BASEBOARD=dwarf source edm-setup-release.sh -b build-x11-pico -e x11
+$: bitbake fsl-image-qt5
+
+*HOBBIT baseboard, QT5 with X11 image for 7 inch LVDS panel:*
+[source,console]
+$: DISPLAY=lvds7 MACHINE=pico-imx6 BASEBOARD=hobbit source edm-setup-release.sh -b build-x11-pico -e x11
+$: bitbake fsl-image-qt5
+
+*HOBBIT baseboard, QT5 with X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: DISPLAY=lcd MACHINE=pico-imx6 BASEBOARD=hobbit source edm-setup-release.sh -b build-x11-pico -e x11
+$: bitbake fsl-image-qt5
+
+*NYMPH baseboard, QT5 with X11 image for HDMI output:*
+[source,console]
+$: MACHINE=pico-imx6 BASEBOARD=nymph source edm-setup-release.sh -b build-x11-pico -e x11
+$: bitbake fsl-image-qt5
+
+*NYMPH baseboard, QT5 with X11 image for 7 inch LVDS panel:*
+[source,console]
+$: DISPLAY=lvds7 MACHINE=pico-imx6 BASEBOARD=nymph source edm-setup-release.sh -b build-x11-pico -e x11
+$: bitbake fsl-image-qt5
+
+=== For TEK3-IMX6
+*TEK3-IMX6 BOX PC, QT5 with X11 image for HDMI output:*
+[source,console]
+$: MACHINE=tek-imx6 source edm-setup-release.sh -b build-x11-tek -e x11
+$: bitbake fsl-image-qt5
+
+=== For TEP-1010-IMX6/TEP-1560-IMX6
+*TEP-1010-IMX6 (before 2017/12/15), QT5 with X11 image:*
+[source,console]
+$: DISPLAY=lvds10 MACHINE=tek-imx6 source edm-setup-release.sh -b build-x11-tek -e x11
+$: bitbake fsl-image-qt5
+
+*TEP-1010-IMX6, QT5 with X11 image:*
+[source,console]
+$: DISPLAY=lvds10v01 MACHINE=tek-imx6 source edm-setup-release.sh -b build-x11-tek -e x11
+$: bitbake fsl-image-qt5
+
+*TEP-1560-IMX6, QT5 with X11 image:*
+[source,console]
+$: DISPLAY=lvds15 MACHINE=tek-imx6 source edm-setup-release.sh -b build-x11-tek -e x11
+$: bitbake fsl-image-qt5
+
 === For TEK3-IMX6UL
 *TEK3-IMX6UL box PC, X11 image for 1024x768 VGA monitor:*
 [source,console]
