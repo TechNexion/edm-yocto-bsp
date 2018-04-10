@@ -50,22 +50,30 @@ For more information, please check the file under `“sources/meta-edm-bsp-relea
 |Parameter |Available options|Description
 
 |MACHINE
-|tek3-imx6ul
-|TechNexion TEK3-IMX6UL 
-
-|
-|tep1-imx6ul
-|TechNexion TEP-0700-IMX6UL
-
-|
 |pico-imx6
-|Compatible with TechNexion PICO-IMX6/PICO-IMX6POP
-(i.MX6 Solo/Dual Lite/Dual/Quad/Quad pop)
+|Compatible with TechNexion PICO-IMX6
+(i.MX6 Solo/Dual Lite/Dual/Quad)
 
 |
 |tek-imx6
 |Compatible with TechNexion TEK3-IMX6/TEP-1010-IMX6/TEP-1560-IMX6
 (i.MX6 Solo/Dual Lite/Dual/Quad/Quad Plus)
+
+|
+|tek3-imx6ul
+|TechNexion TEK3-IMX6UL 
+
+|
+|tep1-imx6ul
+|TechNexion TEP-0500-IMX6UL, TEP-0700-IMX6UL
+
+|
+|pico-imx7
+|Compatible with TechNexion PICO-IMX7
+
+|
+|tep1-imx7d
+|TechNexion TEP-0500-IMX7, TEP-0700-IMX7
 
 |DISPLAY
 |lvds7
@@ -98,9 +106,8 @@ EDM1-CF-IMX6/EDM1-IMX6PLUS
 (i.MX6 Solo/Dual Lite/Dual/Quad/Quad Plus)
 
 |
-|dwarf, hobbit, nymph
-|Compatible with TechNexion PICO-IMX6/PICO-IMX6POP
-(i.MX6 Solo/Dual Lite/Dual/Quad/Quad pop)
+|dwarf, hobbit, nymph, pi
+|Compatible with TechNexion PICO-IMX6, PICO-IMX6UL, PICO-IMX7
 
 |-b
 |<build dir>
@@ -151,7 +158,7 @@ backends
 |===
 
 == Build Yocto for TechNexion target platform
-=== For PICO-IMX6/PICO-IMX6POP
+=== For PICO-IMX6
 *DWARF baseboard, QT5 with X11 image for HDMI output:*
 [source,console]
 $: MACHINE=pico-imx6 BASEBOARD=dwarf source edm-setup-release.sh -b build-x11-pico -e x11
@@ -220,15 +227,67 @@ $: bitbake fsl-image-gui
 $: MACHINE=tek3-imx6ul source edm-setup-release.sh -b build-fb-tek3-imx6ul -e fb
 $: bitbake fsl-image-qt5
 
-=== For TEP-0700-IMX6UL
-*TEP-0700-IMX6UL panel PC, X11 image for 7 inch/5 inch TTL-LCD panel:*
+=== For TEP-0500-IMX6UL, TEP-0700-IMX6UL
+*TEP-0500-IMX6UL, TEP-0700-IMX6UL panel PC, X11 image for 7 inch/5 inch TTL-LCD panel:*
 [source,console]
 $: MACHINE=tep1-imx6ul source edm-setup-release.sh -b build-x11-tep1-imx6ul -e x11
 $: bitbake fsl-image-gui
 
-*TEP-0700-IMX6UL panel PC, QT5 with FB image for 7 inch/5 inch TTL-LCD panel:*
+*TEP-0500-IMX6UL, TEP-0700-IMX6UL panel PC, QT5 with FB image for 7 inch/5 inch TTL-LCD panel:*
 [source,console]
 $: MACHINE=tep1-imx6ul source edm-setup-release.sh -b build-fb-tep1-imx6ul -e fb
+$: bitbake fsl-image-qt5
+
+=== For PICO-IMX7
+*HOBBIT baseboard, X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=hobbit source edm-setup-release.sh -b build-x11-pico-imx7 -e x11
+$: bitbake fsl-image-gui
+
+*HOBBIT baseboard, QT5 with FB image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=hobbit source edm-setup-release.sh -b build-fb-pico-imx7 -e fb
+$: bitbake fsl-image-qt5
+
+*DWARF baseboard, X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=dwarf source edm-setup-release.sh -b build-x11-pico-imx7 -e x11
+$: bitbake fsl-image-gui
+
+*DWARF baseboard, QT5 with FB image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=dwarf source edm-setup-release.sh -b build-fb-pico-imx7 -e fb
+$: bitbake fsl-image-qt5
+
+*NYMPH baseboard, X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=nymph source edm-setup-release.sh -b build-x11-pico-imx7 -e x11
+$: bitbake fsl-image-gui
+
+*NYMPH baseboard, QT5 with FB image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=nymph source edm-setup-release.sh -b build-fb-pico-imx7 -e fb
+$: bitbake fsl-image-qt5
+
+*PI baseboard, X11 image for 5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=pi source edm-setup-release.sh -b build-x11-pico-imx7 -e x11
+$: bitbake fsl-image-gui
+
+*PI baseboard, QT5 with FB image for 5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx7 BASEBOARD=pi source edm-setup-release.sh -b build-fb-pico-imx7 -e fb
+$: bitbake fsl-image-qt5
+
+=== For TEP-0500-IMX7, TEP-0700-IMX7
+*TEP-0500-IMX7, TEP-0700-IMX7 panel PC, X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=tep1-imx7 source edm-setup-release.sh -b build-x11-tep1-imx7 -e x11
+$: bitbake fsl-image-gui
+
+*TEP-0500-IMX7, TEP-0700-IMX7 panel PC, QT5 with FB image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=tep1-imx7 source edm-setup-release.sh -b build-fb-tep1-imx7 -e fb
 $: bitbake fsl-image-qt5
 
 == Chromium
