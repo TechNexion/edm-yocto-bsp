@@ -351,3 +351,5 @@ When build completes, the generated release image is under “${BUILD-TYPE}/tmp/
 
 "fsl-image-qt5-edm1-cf-imx6-${date}.rootfs.sdcard"
 Just flash this image into your target board to deploy yocto.
+
+link:https://github.com/TechNexion/meta-edm-bsp-release/raw/jethro_4.1.15-1.1.0_GA/Documents/PreBuilt_OS_Image_Installation_Guide_v3.4.pdf[PreBuilt_OS_Image_Installation_Guide.pdf]
