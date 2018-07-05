@@ -1,4 +1,4 @@
-= TechNexion Yocto 2.2 morty 4.9.y GA BSP
+= TechNexion Yocto 2.4 rocko 4.9.y GA BSP
 
 This BSP is a TechNexion release providing support NXP i.mx series processors
 
@@ -10,12 +10,12 @@ $: chmod a+x ~/bin/repo
 
 Download the BSP source:
 
-For NXP i.mx8mq SOC, e.g.,WAND-PI-8M:
+For NXP i.mx8mq SOC, e.g.,PICO-8M:
 [source,console]
 $: PATH=${PATH}:~/bin
 $: mkdir edm_yocto
 $: cd edm_yocto
-$: repo init -u https://github.com/TechNexion/edm-yocto-bsp.git -b morty_4.9.y_GA -m imx-4.9.51-8mq_ga.xml
+$: repo init -u https://github.com/TechNexion/edm-yocto-bsp.git -b rocko_4.9.y_GA -m imx-4.9.88-2.0.0_ga.xml
 $: repo sync -j8
 
 
@@ -38,8 +38,8 @@ For more information, please check the file under `“sources/meta-edm-bsp-relea
 |Parameter |Available options|Description
 
 |MACHINE
-|wand-pi-8m
-|WAND-PI-8M
+|pico-8m
+|PICO-8M
 (i.MX8M Quad)
 
 |DISPLAY
@@ -119,17 +119,17 @@ and i.MX 7Dual.
 |===
 
 == Build Yocto for TechNexion target platform
-=== For WAND-PI-8M
+=== For PICO-8M
 *XWayland image for HDMI output:*
 [source,console]
-$: DISTRO=fsl-imx-xwayland MACHINE=wand-pi-8m source edm-setup-release.sh -b build-xwayland
+$: DISTRO=fsl-imx-xwayland MACHINE=pico-8m source edm-setup-release.sh -b build-xwayland
 $: bitbake fsl-image-qt5-validation-imx
 or
 $: bitbake fsl-image-validation-imx
 
 *Wayland image for HDMI output:*
 [source,console]
-$: DISTRO=fsl-imx-wayland MACHINE=wand-pi-8m source edm-setup-release.sh -b build-wayland
+$: DISTRO=fsl-imx-wayland MACHINE=pico-8m source edm-setup-release.sh -b build-wayland
 $: bitbake fsl-image-qt5-validation-imx
 or
 $: bitbake fsl-image-validation-imx
@@ -151,3 +151,10 @@ When build completes, the generated release image is under “${BUILD-TYPE}/tmp/
 $: bzip2 -fd fsl-image-XXX.rootfs.sdcard.bz2
 "fsl-image-XXX.rootfs.sdcard"
 Just flash this image into your target board to deploy yocto.
+
+If the i.mx8m module is only with eMMC, please use following tool to flash image into eMMC. Please set boot jumper to boot from serial download mode, then this tool will mount eMMC as USB mass storage:
+
+MFG tool: (only can be excuted on Windows)
+
+ftp://ftp.technexion.net/development_resources/development_tools/installer/pico-8m_mfgtool_20180705.zip
+
