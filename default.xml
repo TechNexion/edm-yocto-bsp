@@ -30,8 +30,8 @@
   <project remote="fsl-release" name="meta-fsl-bsp-release" path="sources/meta-fsl-bsp-release" revision="krogoth_4.1.y" />
 
   <project remote="edm-release" name="meta-edm-bsp-release" path="sources/meta-edm-bsp-release" revision="krogoth_4.1.y_GA" >
-     <copyfile src="tools/edm-setup-release.sh" dest="edm-setup-release.sh"/>
-     <copyfile src="README" dest="README-Technexion-BSP"/>
+     <linkfile src="tools/edm-setup-release.sh" dest="edm-setup-release.sh"/>
+     <linkfile src="README" dest="README-Technexion-BSP"/>
   </project>
 
 </manifest>
