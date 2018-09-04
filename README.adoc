@@ -10,7 +10,7 @@ $: chmod a+x ~/bin/repo
 
 Download the BSP source:
 
-For NXP i.mx8mq SOC, e.g.,PICO-8M:
+For NXP i.mx8mq SOC, e.g.,PICO-IMX8M:
 [source,console]
 $: PATH=${PATH}:~/bin
 $: mkdir edm_yocto
@@ -38,8 +38,8 @@ For more information, please check the file under `“sources/meta-edm-bsp-relea
 |Parameter |Available options|Description
 
 |MACHINE
-|pico-8m
-|PICO-8M
+|pico-imx8m
+|PICO-IMX8M
 (i.MX8M Quad)
 
 |DISPLAY
@@ -119,17 +119,17 @@ and i.MX 7Dual.
 |===
 
 == Build Yocto for TechNexion target platform
-=== For PICO-8M
+=== For PICO-IMX8M
 *XWayland image for HDMI output:*
 [source,console]
-$: DISTRO=fsl-imx-xwayland MACHINE=pico-8m source edm-setup-release.sh -b build-xwayland
+$: DISTRO=fsl-imx-xwayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-xwayland
 $: bitbake fsl-image-qt5-validation-imx
 or
 $: bitbake fsl-image-validation-imx
 
 *Wayland image for HDMI output:*
 [source,console]
-$: DISTRO=fsl-imx-wayland MACHINE=pico-8m source edm-setup-release.sh -b build-wayland
+$: DISTRO=fsl-imx-wayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-wayland
 $: bitbake fsl-image-qt5-validation-imx
 or
 $: bitbake fsl-image-validation-imx
