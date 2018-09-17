@@ -150,4 +150,15 @@ Note Qt is not supported on i.MX 6UltraLite and i.MX 7Dual. It works on X11 back
 When build completes, the generated release image is under “${BUILD-TYPE}/tmp/deploy/images/${MACHINE}”:
 $: bzip2 -fd fsl-image-XXX.rootfs.sdcard.bz2
 "fsl-image-XXX.rootfs.sdcard"
-Just flash this image into your target board to deploy yocto.
+
+If the i.mx8m module is only with eMMC, please use following tool to flash image into eMMC. Please set boot jumper to boot from serial download mode, then this tool will mount eMMC as USB mass storage:
+
+Please follow the userguide below to flash the image into your target board to deploy yocto.
+https://github.com/TechNexion/u-boot-edm/wiki
+
+MFG tool: (can be excuted under both MS Windows and Linux)
+
+PICO-IMX8M(1GB/2GB/3GB/4GB DRAM):
+
+ftp://ftp.technexion.net/development_resources/development_tools/installer/
+
