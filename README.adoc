@@ -18,6 +18,18 @@ $: cd edm_yocto
 $: repo init -u https://github.com/TechNexion/edm-yocto-bsp.git -b rocko_4.9.y_GA -m imx-4.9.88-2.0.0_ga.xml
 $: repo sync -j8
 
+== Prepare WIFI/BT firmware
+There are two kinds of WLAN module on TechNexion boards.
+One is Broadcom(BRCM) WLAN(includes BCM4330/BCM4339/BCM43438), the other is Qualcomm(QCA) WLAN(includes QCA9377-5/QCA6174).
+Because of the license restriction, please contact TechNexion FAE or Sales to get licensed firmware files.
+
+After getting the firmware binary:
+.. Decompress the tarball and put all the firmware files into `sources/meta-edm-bsp-release/recipes-kernel/linux-firmware/files`.
+
+The directory `sources/meta-edm-bsp-release/recipes-kernel/linux-firmware/files` is the place to put WIFI/BT firmware files.
+
+.. Add firmware package in Yocto build:
+Add argument "WLAN=y" in build instruction. Please refer to following explanation.
 
 == Configurations for setup script
 
@@ -29,9 +41,11 @@ For more information, please check the file under `“sources/meta-edm-bsp-relea
 
 `“BASEBOARD”` is the baseboard type.
 
+`“WLAN”` is to choose to add WLAN firmware files in target rootfs or not.
+
 `“-b”` specify the build directory.
 
-`“-e”` sets the graphical back end for frame buffer and direct fb images. X11 is default if no backend is set.
+
 
 .Build configurations for supported hardware
 |===
@@ -68,7 +82,7 @@ For more information, please check the file under `“sources/meta-edm-bsp-relea
 
 |DISTRO
 |fsl-imx-x11
-|Only X11 graphics
+|Only X11 graphics. X11 graphics are not supported on i.MX8.
 
 |
 |fsl-imx-wayland
@@ -80,7 +94,17 @@ For more information, please check the file under `“sources/meta-edm-bsp-relea
 
 |
 |fsl-imx-fb
-|Frame Buffer graphics - no X11 or Wayland
+|Frame Buffer graphics - no X11 or Wayland. Frame Buffer is not supported on i.MX8.
+
+|BASEBOARD
+|pi, nymph, dwarf, hobbit
+|Compatible with TechNexion PICO-IMX6
+(i.MX6 Solo/Dual Lite/Quad)
+
+|WLAN
+|'y' or 'n'
+|Choose to add WLAN firmware files in target rootfs
+Please refer to section "Prepare WIFI/BT firmware" to ensure you already put firmware files in the right place.
 
 |-b
 |<build dir>
@@ -120,20 +144,39 @@ and i.MX 7Dual.
 
 == Build Yocto for TechNexion target platform
 === For PICO-IMX8M
+Please don't add argument 'WLAN=y' if you don't put firmware files in "sources/meta-edm-bsp-release/recipes-kernel/linux-firmware/files" .
+It would result in build failure. Please refer to section "Prepare WIFI/BT firmware".
+
 *XWayland image for HDMI output:*
 [source,console]
-$: DISTRO=fsl-imx-xwayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-xwayland
+$: WLAN=y DISTRO=fsl-imx-xwayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-xwayland
 $: bitbake fsl-image-qt5-validation-imx
-or
-$: bitbake fsl-image-validation-imx
 
 *Wayland image for HDMI output:*
 [source,console]
-$: DISTRO=fsl-imx-wayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-wayland
+$: WLAN=y DISTRO=fsl-imx-wayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-wayland
 $: bitbake fsl-image-qt5-validation-imx
-or
-$: bitbake fsl-image-validation-imx
 
+
+=== For PICO-IMX6-QCA/PICO-IMX6-BRCM
+Please don't add argument 'WLAN=y' if you don't put firmware files in "sources/meta-edm-bsp-release/recipes-kernel/linux-firmware/files" .
+It would result in build failure. Please refer to section "Prepare WIFI/BT firmware".
+
+*PI baseboard, QT5 with X11 image for HDMI output:*
+[source,console]
+For PICO-IMX6 with QCA WLAN:
+$: WLAN=y DISTRO=fsl-imx-x11 MACHINE=pico-imx6-qca BASEBOARD=pi source edm-setup-release.sh -b build-x11-pico-imx6-qca
+For PICO-IMX6 with BRCM WLAN:
+$: WLAN=y DISTRO=fsl-imx-x11 MACHINE=pico-imx6-brcm BASEBOARD=pi source edm-setup-release.sh -b build-x11-pico-imx6-brcm
+$: bitbake fsl-image-qt5-validation-imx
+
+*NYMPH baseboard, QT5 with X11 image for 7 inch LVDS panel:*
+[source,console]
+For PICO-IMX6 with QCA WLAN:
+$: WLAN=y DISTRO=fsl-imx-x11 MACHINE=pico-imx6-qca BASEBOARD=nymph source edm-setup-release.sh -b build-x11-pico-imx6-qca
+For PICO-IMX6 with BRCM WLAN:
+$: WLAN=y DISTRO=fsl-imx-x11 MACHINE=pico-imx6-brcm BASEBOARD=nymph source edm-setup-release.sh -b build-x11-pico-imx6-brcm
+$: bitbake fsl-image-qt5-validation-imx
 
 == QTWebkit
 To start to go to /usr/share/qt5/examples/webkitwidgets/browser and run browser
