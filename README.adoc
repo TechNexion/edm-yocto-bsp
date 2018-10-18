@@ -20,7 +20,7 @@ $: repo sync -j8
 
 == Prepare WIFI/BT firmware
 There are two kinds of WLAN module on TechNexion boards.
-One is Broadcom(BRCM) WLAN(includes BCM4330/BCM4339/BCM43438), the other is Qualcomm(QCA) WLAN(includes QCA9377-5/QCA6174).
+One is Broadcom(BRCM) WLAN(includes BCM4330/BCM4339(AP6335)/BCM43438(AP6212)), the other is Qualcomm(QCA) WLAN(includes QCA9377-5/QCA6174).
 Because of the license restriction, please contact TechNexion FAE or Sales to get licensed firmware files.
 
 After getting the firmware binary:
@@ -29,7 +29,7 @@ After getting the firmware binary:
 The directory `sources/meta-edm-bsp-release/recipes-kernel/linux-firmware/files` is the place to put WIFI/BT firmware files.
 
 .. Add firmware package in Yocto build:
-Add argument "WLAN=y" in build instruction. Please refer to following explanation.
+Add argument "WIFI_FIRMWARE=y" in build instruction. Please refer to following explanation.
 
 == Configurations for setup script
 
@@ -37,14 +37,15 @@ Add argument "WLAN=y" in build instruction. Please refer to following explanatio
 
 For more information, please check the file under `“sources/meta-edm-bsp-release/conf/machine”`.
 
+`“-b”` specify the build directory.
+
 `“DISPLAY”` is the disply type. This option only works on i.mx6 (i.mx6 Solo/Dual Lite/Dual/Quad) SOMs and doesn’t work for i.mx6ul, i.mx6sx and i.mx7.
 
 `“BASEBOARD”` is the baseboard type.
 
-`“WLAN”` is to choose to add WLAN firmware files in target rootfs or not.
+`“WIFI_MODULE”` is to choose what kind of WLAN is on board. (qca/brcm)
 
-`“-b”` specify the build directory.
-
+`“WIFI_FIRMWARE”` is to choose to add WLAN firmware files in target rootfs or not. (y/all)
 
 
 .Build configurations for supported hardware
@@ -56,29 +57,9 @@ For more information, please check the file under `“sources/meta-edm-bsp-relea
 |PICO-IMX8M
 (i.MX8M Quad)
 
-|DISPLAY
-|lvds7
-|7 inch 1024x600 LVDS panel
-
-|(Parameter "DISPLAY" only works on i.mx6)
-|hdmi720p
-|1280x720 HDMI
-
 |
-|hdmi1080p
-|1920x1080 HDMI
-
-|
-|lcd
-|5 inch/7 inch 800x480 TTL parallel LCD panel
-
-|
-|lvds7_hdmi720p
-|Dual display output to both 7 inch LVDS and HDMI
-
-|
-|custom
-|Reserved for custom panel
+|pico-imx6
+|Compatible with TechNexion PICO-IMX6 (i.MX6 Solo/DL/Dual/Quad)
 
 |DISTRO
 |fsl-imx-x11
@@ -97,14 +78,51 @@ For more information, please check the file under `“sources/meta-edm-bsp-relea
 |Frame Buffer graphics - no X11 or Wayland. Frame Buffer is not supported on i.MX8.
 
 |BASEBOARD
+
+(It specifies the 'baseboard' variable in uEnv.txt)
 |pi, nymph, dwarf, hobbit
 |Compatible with TechNexion PICO-IMX6
-(i.MX6 Solo/Dual Lite/Quad)
+(i.MX6 Solo/DL/Quad).
 
-|WLAN
-|'y' or 'n'
-|Choose to add WLAN firmware files in target rootfs
+|WIFI_MODULE
+
+(It specifies the 'wifi_module' variable in uEnv.txt)
+|'qca' or 'brcm'
+|Choose what kind of WLAN is on board.
+
+
+|WIFI_FIRMWARE
+|'y' or 'all'
+|'y' option depends on 'WIFI_MODULE'. If you specify 'WIFI_MODULE' as 'qca'. Then, it only add 'qca' firmware package in yocto build.
+'all' option will add both 'qca' and 'brcm' firmware package in yocto build.
 Please refer to section "Prepare WIFI/BT firmware" to ensure you already put firmware files in the right place.
+
+|DISPLAY
+
+(Parameter "DISPLAY" only works on i.mx6)
+(It specifies the 'displayinfo' variable in uEnv.txt)
+|lvds7
+|7 inch 1024x600 LVDS panel
+
+|
+|hdmi720p
+|1280x720 HDMI
+
+|
+|hdmi1080p
+|1920x1080 HDMI
+
+|
+|lcd
+|5 inch/7 inch 800x480 TTL parallel LCD panel
+
+|
+|lvds7_hdmi720p
+|Dual display output to both 7 inch LVDS and HDMI
+
+|
+|custom
+|Reserved for custom panel
 
 |-b
 |<build dir>
@@ -143,39 +161,36 @@ and i.MX 7Dual.
 |===
 
 == Build Yocto for TechNexion target platform
-=== For PICO-IMX8M
-Please don't add argument 'WLAN=y' if you don't put firmware files in "sources/meta-edm-bsp-release/recipes-kernel/linux-firmware/files" .
+Please don't add argument 'WIFI_FIRMWARE=y' if you don't put firmware files in "sources/meta-edm-bsp-release/recipes-kernel/linux-firmware/files" .
 It would result in build failure. Please refer to section "Prepare WIFI/BT firmware".
 
+=== For PICO-IMX8M
 *XWayland image for HDMI output:*
 [source,console]
-$: WLAN=y DISTRO=fsl-imx-xwayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-xwayland
+$: WIFI_FIRMWARE=y DISTRO=fsl-imx-xwayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-xwayland
 $: bitbake fsl-image-qt5-validation-imx
 
 *Wayland image for HDMI output:*
 [source,console]
-$: WLAN=y DISTRO=fsl-imx-wayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-wayland
+$: WIFI_FIRMWARE=y DISTRO=fsl-imx-wayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-wayland
 $: bitbake fsl-image-qt5-validation-imx
 
 
-=== For PICO-IMX6-QCA/PICO-IMX6-BRCM
-Please don't add argument 'WLAN=y' if you don't put firmware files in "sources/meta-edm-bsp-release/recipes-kernel/linux-firmware/files" .
-It would result in build failure. Please refer to section "Prepare WIFI/BT firmware".
-
+=== For PICO-IMX6
 *PI baseboard, QT5 with X11 image for HDMI output:*
 [source,console]
 For PICO-IMX6 with QCA WLAN:
-$: WLAN=y DISTRO=fsl-imx-x11 MACHINE=pico-imx6-qca BASEBOARD=pi source edm-setup-release.sh -b build-x11-pico-imx6-qca
+$: WIFI_FIRMWARE=y WIFI_MODULE=qca DISTRO=fsl-imx-x11 MACHINE=pico-imx6 BASEBOARD=pi source edm-setup-release.sh -b build-x11-pico-imx6
 For PICO-IMX6 with BRCM WLAN:
-$: WLAN=y DISTRO=fsl-imx-x11 MACHINE=pico-imx6-brcm BASEBOARD=pi source edm-setup-release.sh -b build-x11-pico-imx6-brcm
+$: WIFI_FIRMWARE=y WIFI_MODULE=brcm DISTRO=fsl-imx-x11 MACHINE=pico-imx6 BASEBOARD=pi source edm-setup-release.sh -b build-x11-pico-imx6
 $: bitbake fsl-image-qt5-validation-imx
 
 *NYMPH baseboard, QT5 with X11 image for 7 inch LVDS panel:*
 [source,console]
 For PICO-IMX6 with QCA WLAN:
-$: WLAN=y DISTRO=fsl-imx-x11 MACHINE=pico-imx6-qca BASEBOARD=nymph source edm-setup-release.sh -b build-x11-pico-imx6-qca
+$: DISPLAY=lvds7 WIFI_FIRMWARE=y WIFI_MODULE=qca DISTRO=fsl-imx-x11 MACHINE=pico-imx6 BASEBOARD=nymph source edm-setup-release.sh -b build-x11-pico-imx6
 For PICO-IMX6 with BRCM WLAN:
-$: WLAN=y DISTRO=fsl-imx-x11 MACHINE=pico-imx6-brcm BASEBOARD=nymph source edm-setup-release.sh -b build-x11-pico-imx6-brcm
+$: DISPLAY=lvds7 WIFI_FIRMWARE=y WIFI_MODULE=brcm DISTRO=fsl-imx-x11 MACHINE=pico-imx6 BASEBOARD=nymph source edm-setup-release.sh -b build-x11-pico-imx6
 $: bitbake fsl-image-qt5-validation-imx
 
 == QTWebkit
@@ -197,6 +212,7 @@ $: bzip2 -fd fsl-image-XXX.rootfs.sdcard.bz2
 If the i.mx8m module is only with eMMC, please use following tool to flash image into eMMC. Please set boot jumper to boot from serial download mode, then this tool will mount eMMC as USB mass storage:
 
 Please follow the userguide below to flash the image into your target board to deploy yocto.
+
 https://github.com/TechNexion/u-boot-edm/wiki
 
 MFG tool: (can be excuted under both MS Windows and Linux)
