@@ -54,12 +54,15 @@ For more information, please check the file under `“sources/meta-edm-bsp-relea
 
 |MACHINE
 |pico-imx8m
-|PICO-IMX8M
-(i.MX8M Quad)
+|Compatible with TechNexion PICO-IMX8M (i.MX8M Quad)
 
 |
 |pico-imx6
 |Compatible with TechNexion PICO-IMX6 (i.MX6 Solo/DL/Dual/Quad)
+
+|
+|pico-imx7
+|Compatible with TechNexion PICO-IMX7
 
 |DISTRO
 |fsl-imx-x11
@@ -191,6 +194,15 @@ For PICO-IMX6 with QCA WLAN:
 $: DISPLAY=lvds7 WIFI_FIRMWARE=y WIFI_MODULE=qca DISTRO=fsl-imx-x11 MACHINE=pico-imx6 BASEBOARD=nymph source edm-setup-release.sh -b build-x11-pico-imx6
 For PICO-IMX6 with BRCM WLAN:
 $: DISPLAY=lvds7 WIFI_FIRMWARE=y WIFI_MODULE=brcm DISTRO=fsl-imx-x11 MACHINE=pico-imx6 BASEBOARD=nymph source edm-setup-release.sh -b build-x11-pico-imx6
+$: bitbake fsl-image-qt5-validation-imx
+
+=== For PICO-IMX7
+*PI baseboard, QT5 with X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+For PICO-IMX7 with QCA WLAN:
+$: WIFI_FIRMWARE=y WIFI_MODULE=qca DISTRO=fsl-imx-x11 MACHINE=pico-imx7 BASEBOARD=pi source edm-setup-release.sh -b build-x11-pico-imx7
+For PICO-IMX7 with BRCM WLAN:
+$: WIFI_FIRMWARE=y WIFI_MODULE=brcm DISTRO=fsl-imx-x11 MACHINE=pico-imx7 BASEBOARD=pi source edm-setup-release.sh -b build-x11-pico-imx7
 $: bitbake fsl-image-qt5-validation-imx
 
 == QTWebkit
