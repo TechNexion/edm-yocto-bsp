@@ -186,8 +186,7 @@ $: bitbake fsl-image-qt5-validation-imx
 $: DISPLAY=mipi5 WIFI_FIRMWARE=y DISTRO=fsl-imx-wayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-wayland
 $: bitbake fsl-image-qt5-validation-imx
 
-[horizontal]
-DISTRO:: DISTRO can be replaced to "fsl-imx-xwayland"
+*DISTRO: DISTRO can be replaced to "fsl-imx-xwayland"*
 
 === For PICO-IMX6
 *PI baseboard, QT5 with X11 image for HDMI output:*
