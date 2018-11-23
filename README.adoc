@@ -102,30 +102,38 @@ Please refer to section "Prepare WIFI/BT firmware" to ensure you already put fir
 
 |DISPLAY
 
-(Parameter "DISPLAY" only works on i.mx6)
+(Parameter "DISPLAY" only works on i.mx6/i.mx8m)
 (It specifies the 'displayinfo' variable in uEnv.txt)
 |lvds7
-|7 inch 1024x600 LVDS panel
+|(i.mx6) 7 inch 1024x600 LVDS panel
 
 |
 |hdmi720p
-|1280x720 HDMI
+|(i.mx6) 1280x720 HDMI
 
 |
 |hdmi1080p
-|1920x1080 HDMI
+|(i.mx6) 1920x1080 HDMI
 
 |
 |lcd
-|5 inch/7 inch 800x480 TTL parallel LCD panel
+|(i.mx6) 5 inch/7 inch 800x480 TTL parallel LCD panel
 
 |
 |lvds7_hdmi720p
-|Dual display output to both 7 inch LVDS and HDMI
+|(i.mx6) Dual display output to both 7 inch LVDS and HDMI
 
 |
 |custom
-|Reserved for custom panel
+|(i.mx6) Reserved for custom panel
+
+|
+|mipi5
+|(i.mx8m) MIPI-DSI 5 inch panel(with ILI9881 controller)
+
+|
+|hdmi
+|(i.mx8m) HDMI monitor (the resolution is decided by EDID)
 
 |-b
 |<build dir>
@@ -168,16 +176,18 @@ Please don't add argument 'WIFI_FIRMWARE=y' if you don't put firmware files in "
 It would result in build failure. Please refer to section "Prepare WIFI/BT firmware".
 
 === For PICO-IMX8M
-*XWayland image for HDMI output:*
+*Wayland image for HDMI monitor:*
 [source,console]
-$: WIFI_FIRMWARE=y DISTRO=fsl-imx-xwayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-xwayland
+$: DISPLAY=hdmi WIFI_FIRMWARE=y DISTRO=fsl-imx-wayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-wayland
 $: bitbake fsl-image-qt5-validation-imx
 
-*Wayland image for HDMI output:*
+*Wayland image for MIPI-DSI 5-inch panel:*
 [source,console]
-$: WIFI_FIRMWARE=y DISTRO=fsl-imx-wayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-wayland
+$: DISPLAY=mipi5 WIFI_FIRMWARE=y DISTRO=fsl-imx-wayland MACHINE=pico-imx8m source edm-setup-release.sh -b build-wayland
 $: bitbake fsl-image-qt5-validation-imx
 
+[horizontal]
+DISTRO:: DISTRO can be replaced to "fsl-imx-xwayland"
 
 === For PICO-IMX6
 *PI baseboard, QT5 with X11 image for HDMI output:*
