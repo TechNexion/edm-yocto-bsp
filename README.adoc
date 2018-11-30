@@ -40,7 +40,8 @@ After fetch yocto source code, create a docker image from a dockerfile.
 [source,console]
 $: cd sources/meta-edm-bsp-release/tools/container
 $: docker build -t tn_ubuntu1604 .
-$: docker run -it -u jenkins -v /home/builder/jenkins:/home/jenkins/server tn_ubuntu1604 /bin/bash
+$: docker run -it -u jenkins -v ${directory_in_host_machine}:${directory_in_docker} tn_ubuntu1604 /bin/bash
+(-v: use to bind volume to the directory in host machine)
 (password: jenkins)
 
 == Prepare WIFI/BT firmware
