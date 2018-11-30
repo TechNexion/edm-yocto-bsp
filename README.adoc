@@ -33,8 +33,15 @@ groff curl lzop asciidoc u-boot-tools libreoffice-writer \
 sshpass ssh-askpass zip xz-utils kpartx vim screen
 
 Use the dockerfile to setup the build environment:
-After fetch yocto source code, create a docker container.
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04[Install docker on ubuntu 16.04]
+
+After fetch yocto source code, create a docker image from a dockerfile.
 [source,console]
+$: cd sources/meta-edm-bsp-release/tools/container
+$: docker build -t tn_ubuntu1604 .
+$: docker run -it -u jenkins -v /home/builder/jenkins:/home/jenkins/server tn_ubuntu1604 /bin/bash
+(password: jenkins)
 
 == Prepare WIFI/BT firmware
 There are two kinds of WLAN module on TechNexion boards.
