@@ -111,6 +111,10 @@ For more information, please check the file under `“sources/meta-edm-bsp-relea
 |Compatible with TechNexion TEP-0500-IMX6UL/TEP-0700-IMX6UL
 
 |
+|tek-imx6
+|Compatible with TechNexion TEK3-IMX6/TEP-1010-IMX6/TEP-1560-IMX6/TWP-1010-IMX6/TWP-1560-IMX6 (i.MX6 Solo/DL/Dual/Quad/Quad Plus)
+
+|
 |tek3-imx6ul
 |Compatible with TechNexion TEK3-IMX6UL
 
@@ -162,6 +166,14 @@ Please refer to section "Prepare WIFI/BT firmware" to ensure you already put fir
 (It specifies the 'displayinfo' variable in uEnv.txt)
 |lvds7
 |(i.mx6) 7 inch 1024x600 LVDS panel
+
+|
+|lvds10
+|(i.mx6) 10 inch 1280x800 LVDS panel
+
+|
+|lvds15
+|(i.mx6) 15 inch 1366x768 LVDS panel
 
 |
 |hdmi720p
@@ -338,6 +350,26 @@ $: bitbake fsl-image-qt5-validation-imx
 *TEP-0500-IMX6UL/TEP-0700-IMX6UL, QT5 with X11 image:*
 [source,console]
 $: DISTRO=fsl-imx-x11 MACHINE=tep1-imx6ul source edm-setup-release.sh -b build-x11-tep1-imx6ul
+$: bitbake fsl-image-qt5-validation-imx
+
+=== For TEK3-IMX6
+*TEK3-IMX6 BOX PC, QT5 with X11 image for HDMI output:*
+[source,console]
+For TEK3-IMX6 with PCIE WLAN:
+$:  WIFI_FIRMWARE=y WIFI_MODULE=ath-pci DISTRO=fsl-imx-x11 MACHINE=tek-imx6 source edm-setup-release.sh -b build-x11-tek-imx6
+$: bitbake fsl-image-qt5-validation-imx
+
+=== For TEP-1010-IMX6/TEP-1560-IMX6/TWP-1010-IMX6/TWP-1560-IMX6
+*TEP-1010-IMX6/TWP-1010-IMX6, QT5 with X11 image:*
+[source,console]
+For TEP-1010-IMX6/TWP-1010-IMX6 with PCIE WLAN:
+$:  DISPLAY=lvds10 WIFI_FIRMWARE=y WIFI_MODULE=ath-pci DISTRO=fsl-imx-x11 MACHINE=tek-imx6 source edm-setup-release.sh -b build-x11-tek-imx6
+$: bitbake fsl-image-qt5-validation-imx
+
+*TEP-1560-IMX6/TWP-1560-IMX6, QT5 with X11 image:*
+[source,console]
+For TEP-1560-IMX6/TWP-1560-IMX6 with PCIE WLAN:
+$:  DISPLAY=lvds15 WIFI_FIRMWARE=y WIFI_MODULE=ath-pci DISTRO=fsl-imx-x11 MACHINE=tek-imx6 source edm-setup-release.sh -b build-x11-tek-imx6
 $: bitbake fsl-image-qt5-validation-imx
 
 === For TEK3-IMX6UL
