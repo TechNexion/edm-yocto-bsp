@@ -35,8 +35,10 @@ groff curl lzop asciidoc u-boot-tools libreoffice-writer \
 sshpass ssh-askpass zip xz-utils kpartx vim screen
 
 === Method 2:
-Download virtual machine with pre-installed Ubuntu 16.04 and packages.
-ftp://ftp.technexion.net/development_resources/development_tools/vm [Virtual Machine for Ubuntu 16.04]
+Download virtual machine with pre-installed Ubuntu 16.04 and packages.   
+
+ftp://ftp.technexion.net/development_resources/development_tools/vm   
+
 This virtual machine is validated to build Yocto 2.4.
 
 === Method 3:
