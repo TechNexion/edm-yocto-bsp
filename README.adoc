@@ -18,6 +18,8 @@ $: cd edm_yocto
 $: repo init -u https://github.com/TechNexion/edm-yocto-bsp.git -b rocko_4.9.y_GA -m imx-4.9.88-2.0.0_ga.xml
 $: repo sync -j8
 
+== Create build environment
+=== Method 1:
 Set up build environment on host PC:
 Our build environment is under ubuntu 16.04.
 
@@ -32,6 +34,12 @@ libgl1-mesa-dev libglu1-mesa-dev mercurial autoconf automake \
 groff curl lzop asciidoc u-boot-tools libreoffice-writer \
 sshpass ssh-askpass zip xz-utils kpartx vim screen
 
+=== Method 2:
+Download virtual machine with pre-installed Ubuntu 16.04 and packages.
+ftp://ftp.technexion.net/development_resources/development_tools/vm [Virtual Machine for Ubuntu 16.04]
+This virtual machine is validated to build Yocto 2.4.
+
+=== Method 3:
 Use the dockerfile to setup the build environment:
 
 https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04[Install docker on ubuntu 16.04]
