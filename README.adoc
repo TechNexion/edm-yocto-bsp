@@ -21,6 +21,7 @@ $: repo sync -j8
 == Create build environment
 === Method 1:
 Set up build environment on host PC:
+
 Our build environment is under ubuntu 16.04.
 
 Install required packages:
