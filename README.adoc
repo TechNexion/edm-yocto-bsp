@@ -158,6 +158,27 @@ backends
 |===
 
 == Build Yocto for TechNexion target platform
+=== For EDM1-CF-IMX6/EDM1-IMX6PLUS
+*FAIRY baseboard, QT5 with X11 image for HDMI output:*
+[source,console]
+$: MACHINE=edm1-cf-imx6 BASEBOARD=fairy source edm-setup-release.sh -b build-x11-fairy -e x11 
+$: bitbake fsl-image-qt5
+
+*FAIRY baseboard, QT5 with X11 image for 7 inch LVDS panel:*
+[source,console]
+$: DISPLAY=lvds7 MACHINE=edm1-cf-imx6 BASEBOARD=fairy source edm-setup-release.sh -b build-x11-fairy  -e x11 
+$: bitbake fsl-image-qt5
+
+*FAIRY baseboard, QT5 with X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: DISPLAY=lcd MACHINE=edm1-cf-imx6 BASEBOARD=fairy source edm-setup-release.sh -b build-x11-fairy  -e x11 
+$: bitbake fsl-image-qt5
+
+*Toucan0700, QT5 with X11 image for 7 inch LVDS panel and disabled debug console:*
+[source,console]
+$: DISPLAY=lvds7 MACHINE=edm1-cf-imx6-no-console BASEBOARD=tc0700 source edm-setup-release.sh -b build-x11-toucan -e x11 
+$: bitbake fsl-image-qt5
+
 === For PICO-IMX6
 *DWARF baseboard, QT5 with X11 image for HDMI output:*
 [source,console]
@@ -214,6 +235,27 @@ $: bitbake fsl-image-qt5
 *TEP-1560-IMX6, QT5 with X11 image:*
 [source,console]
 $: DISPLAY=lvds15 MACHINE=tek-imx6 source edm-setup-release.sh -b build-x11-tek -e x11
+$: bitbake fsl-image-qt5
+
+=== For PICO-IMX6UL-EMMC
+*HOBBIT baseboard, X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx6ul-emmc source edm-setup-release.sh -b build-x11-pico-imx6ul -e x11
+$: bitbake fsl-image-gui
+
+*HOBBIT baseboard, QT5 with FB image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx6ul-emmc BASEBOARD=hobbit source edm-setup-release.sh -b build-fb-pico-imx6ul -e fb
+$: bitbake fsl-image-qt5
+
+*PI baseboard, X11 image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx6ul-emmc BASEBOARD=pi source edm-setup-release.sh -b build-x11-pico-imx6ul -e x11
+$: bitbake fsl-image-gui
+
+*PI baseboard, QT5 with FB image for 7 inch/5 inch TTL-LCD panel:*
+[source,console]
+$: MACHINE=pico-imx6ul-emmc BASEBOARD=pi source edm-setup-release.sh -b build-fb-pico-imx6ul -e fb
 $: bitbake fsl-image-qt5
 
 === For TEK3-IMX6UL
