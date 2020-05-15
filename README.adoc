@@ -60,6 +60,9 @@ There are two kinds of WLAN module on TechNexion boards.
 One is Broadcom(BRCM) WLAN(includes BCM4330/BCM4339(AP6335)/BCM43438(AP6212)), the other is Qualcomm(QCA) WLAN(includes QCA9377-5/QCA6174).
 Because of the license restriction, please contact TechNexion FAE or Sales to get licensed firmware files.
 
+For QCA WLAN and BT:
+qca9377-3_qca6174-3_firmware_20191128.zip
+
 After getting the firmware binary:
 .. Decompress the tarball and put all the firmware files into `sources/meta-edm-bsp-release/recipes-kernel/linux-firmware/files`.
 
